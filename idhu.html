@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Papiacraft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;800&display=swap"
+    rel="stylesheet" />
+
+  <script>
+    /* ═══════════════════════════════════════════════════════════════
+       CONFIGURACIÓN — edita solo esta sección
+       ═══════════════════════════════════════════════════════════════
+  
+       CÓMO VINCULAR IMÁGENES LOCALES:
+       Si tienes el HTML en:  C:/MiServer/index.html
+       Y las fotos en:        C:/MiServer/img/t1/foto1.png
+  
+       Escribe la ruta así:   "img/t1/foto1.png"
+  
+       Ejemplos:
+         "img/t1/portada.png"          ← carpeta img/t1/
+         "img/evento/screenshot1.jpg"  ← carpeta img/evento/
+         "fotos/t2/mundo.png"          ← cualquier carpeta que crees
+  
+       Si solo tienes UNA foto, igual ponla en el array:
+         fotos: ["img/t1/portada.png"]
+  
+       Si no tienes fotos aún, deja el array vacío:
+         fotos: []
+    ═══════════════════════════════════════════════════════════════ */
+
+    const SERVIDOR = "Papiacraft";
+    const BANNER_IMG = "https://www.xtrafondos.com/wallpapers/paisaje-minecraft-de-jungla-y-rio-en-primavera-13858.jpg";
+
+    const MAPAS = [
+      {
+        badge: "TEMPORADA 1",
+        titulo: "Papiacraft T1",
+        fotos: ["img/t1/lobby.png", "img/t1/lobby2.png", "img/t1/img1.png", "img/t1/img2.png", "img/t1/img3.png"],           // ej: ["img/t1/foto1.png", "img/t1/foto2.png"]
+        link: "https://www.mediafire.com/file/v6l19816uvl9ob1/Papiacraft1.0.mcworld/file",
+        descripcion: "La temporada que lo empezó todo. El mapa original, sin modificar."
+      },
+      {
+        badge: "TEMPORADA 1",
+        titulo: "Papiacraft T1 (destruido)",
+        fotos: ["img/t1(destruido)/destruido1.png", "img/t1(destruido)/destruido2.png", "img/t1(destruido)/destruido3.png", "img/t1(destruido)/destruido4.png"],           // ej: ["img/t1/foto1.png", "img/t1/foto2.png"]
+        link: "https://www.mediafire.com/file/apqrevkvycpiv9h/papiacraft+1.5+destruido.mcworld/file",
+        descripcion: "Segunda temporada con nuevas builds y más aventuras."
+      },
+      {
+        badge: "EVENTO (alpha)",
+        titulo: "Evento Concierto",
+        fotos: ["img/evento/concierto1.png", "img/evento/concierto2.png", "img/evento/concierto3.png"],           // ej: ["img/evento/foto1.png", "img/evento/foto2.png"]
+        link: "https://www.mediafire.com/file/gamvix78vm8ch6r/evento+alpha.mcworld/file",
+        descripcion: "Tercera temporada llena de progreso y megaproyectos."
+      },
+      {
+        badge: "Evento (Beta)",
+        titulo: "Evento Concierto",
+        fotos: ["img/evento/concierto2.png", "img/evento/concierto4.png", "img/evento/concierto3.png"],           // ej: ["img/evento/foto1.png", "img/evento/foto2.png"]
+        link: "https://www.mediafire.com/file/aca1bauas97wtxb/evento+beta.mcworld/file",           // deja "" para "Próximamente"
+        descripcion: "La temporada final. El legado del servidor."
+      },
+      {
+        badge: "Evento",
+        titulo: "Evento Concierto",
+        fotos: ["img/evento/concierto6.png", "img/evento/concierto1.png", "img/evento/concierto10.png", "img/evento/concierto7.png", "img/evento/concierto8.png", "img/evento/concierto9.png"],           // ej: ["img/evento/foto1.png", "img/evento/foto2.png"]
+        link: "https://www.mediafire.com/file/b1mkq2ghhhmfksk/evento.mcworld/file",           // deja "" para "Próximamente"
+        descripcion: "La temporada final. El legado del servidor."
+      },
+      {
+        badge: "PvP (pre-alpha)",
+        titulo: "PvP",
+        fotos: ["img/evento/pvp.png"],           // ej: ["img/evento/foto1.png", "img/evento/foto2.png"]
+        link: "https://www.mediafire.com/file/zopmujdsftqkpgo/pvp_roto.mcworld/file",           // deja "" para "Próximamente"
+        descripcion: "La temporada final. El legado del servidor."
+      },
+      {
+        badge: "TEMPORADA 2",
+        titulo: "Papiacraft T2 (alpha)",
+        fotos: ["img/t2/1.png", "img/t2/2.png", "img/t2/3.png", "img/t2/4.png", "img/t2/5.png"],           // ej: ["img/evento/foto1.png", "img/evento/foto2.png"]
+        link: "https://www.mediafire.com/file/9rj5ujgwfrq6m77/papiacraft_2_alpha.mcworld/file",           // deja "" para "Próximamente"
+        descripcion: "La temporada final. El legado del servidor."
+      },
+      {
+        badge: "TEMPORADA 2",
+        titulo: "Papiacraft T2 (alpha 2)",
+        fotos: ["img/t2/5.png", "img/t2/7.png", "img/t2/8.png"],           // ej: ["img/evento/foto1.png", "img/evento/foto2.png"]
+        link: "https://www.mediafire.com/file/4714640jb0wfg0s/Papiacraft_2_alpha_2.mcworld/file",           // deja "" para "Próximamente"
+        descripcion: "La temporada final. El legado del servidor."
+      },
+      {
+        badge: "TEMPORADA 2",
+        titulo: "Papiacraft T2",
+        fotos: ["img/t2/9.png", "img/t2/10.png"],           // ej: ["img/evento/foto1.png", "img/evento/foto2.png"]
+        link: "https://www.mediafire.com/file/oy7qt082t8jogw8/papiacraft_2.mcworld/file",           // deja "" para "Próximamente"
+        descripcion: "La temporada final. El legado del servidor."
+      },
+      {
+        badge: "TEMPORADA 2.1",
+        titulo: "Papiacraft T2",
+        fotos: ["img/t2/11.png", "img/t2/12.png", "img/t2/13.png"],           // ej: ["img/evento/foto1.png", "img/evento/foto2.png"]
+        link: "https://www.mediafire.com/file/9iw9eha9puaxcfj/papiacraft_2.1.mcworld/file",           // deja "" para "Próximamente"
+        descripcion: "La temporada final. El legado del servidor."
+      },
+      {
+        badge: "TEMPORADA 2.2",
+        titulo: "Papiacraft T2",
+        fotos: ["img/t2/14.png", "img/t2/15.png", "img/t2/16.png", "img/t2/17.png", "img/t2/18.png", "img/t2/19.png"],           // ej: ["img/evento/foto1.png", "img/evento/foto2.png"]
+        link: "https://www.mediafire.com/file/ehqz328bvyhn2hx/papiacraft_2.2.mcworld/file",           // deja "" para "Próximamente"
+        descripcion: "La temporada final. El legado del servidor."
+      },
+      {
+        badge: "TEMPORADA 3",
+        titulo: "Papiacraft 3",
+        fotos: ["img/t3/1.png", "img/t3/2.png", "img/t3/3.png", "img/t3/4.png", "img/t3/5.png", "img/t3/6.png", "img/t3/7.png", "img/t3/8.png"],           // ej: ["img/evento/foto1.png", "img/evento/foto2.png"]
+        link: "https://www.mediafire.com/file/fit1npe8uwbrz6z/papiacraft_3_beta.mcworld/file",           // deja "" para "Próximamente"
+        descripcion: "La temporada final. El legado del servidor."
+      }
+    ];
+
+    /* ═══════════════════════════════════════════════════════════════
+       TEXTURAS — paquetes de recursos necesarios para algunos mundos
+    ═══════════════════════════════════════════════════════════════ */
+    const TEXTURAS = [
+      {
+        titulo: "port_by_papitas_del_satured_xd",
+        fotos: ["img/packs/1.webp", "img/packs/2.webp", "img/packs/3.webp"],
+        link: "https://www.mediafire.com/file/yvmm50zq9u7mfup/port_by_papitas_del_satured_xd.zip/file",                        // link de descarga
+        descripcion: "Pack de texturas usado en la T2 y eventos."
+      },
+      {
+        titulo: "Lunar_Client_v5_port_by_papia",
+        fotos: ["img/packs/4.webp", "img/packs/5.webp", "img/packs/6.webp"],
+        link: "https://www.mediafire.com/file/1aexex8lw41q20e/Lunar_Client_v5_port_by_papia.zip/file",                        // link de descarga
+        descripcion: "Pack de texturas usado en la T2 y eventos."
+      },
+      {
+        titulo: "Dark_Mode_Bedrock_port_by_papia",
+        fotos: ["img/packs/8.webp", "img/packs/9.webp", "img/packs/10.webp"],
+        link: "https://www.mediafire.com/file/agqcvdtv89aiml5/Dark_Mode_Bedrock_port_by_papia.zip/file",                        // link de descarga
+        descripcion: "Pack de texturas usado en la T2 y eventos."
+      }
+    ];
+
+    /* ═══════════════════════════════════════════════════════════════
+       ADDONS — complementos de jugabilidad, mods o comportamientos
+    ═══════════════════════════════════════════════════════════════ */
+    const ADDONS = [
+      {
+        titulo: "Musica de evento",
+        fotos: ["img/evento/concierto10.png"],                        // ej: ["img/addons/addon1.png"]
+        link: "https://www.mediafire.com/file/elkbnzlafpt5ys5/Suscribete.zip/file",                         // link de descarga (.mcaddon, .mcpack, .zip)
+        descripcion: "Necesario para los eventos.."
+      },
+      {
+        titulo: "Skins de evento",
+        fotos: ["img/evento/concierto7.png"],                        // ej: ["img/addons/addon1.png"]
+        link: "https://www.https://www.mediafire.com/file/5t0c56va1fu1r9l/Skulls_mobs_-_Statues.zip/file.com/file/elkbnzlafpt5ys5/Suscribete.zip/file",                         // link de descarga (.mcaddon, .mcpack, .zip)
+        descripcion: "Skins del evento"
+      }
+    ];
+
+    /* ═══════════════════════════════════════════════════════════════
+       RECUERDOS — álbum de fotos y recuerdos del servidor
+    ═══════════════════════════════════════════════════════════════ */
+    const RECUERDOS = [
+      {
+        titulo: "Inauguración de la T2",
+        fotos: [
+          "img/recuerdos/1.png", "img/recuerdos/2.webp", "img/recuerdos/3.webp", "img/recuerdos/4.webp", "img/recuerdos/5.webp",
+          "img/recuerdos/6.webp", "img/recuerdos/7.webp", "img/recuerdos/8.webp", "img/recuerdos/9.webp", "img/recuerdos/10.webp",
+          "img/recuerdos/11.webp", "img/recuerdos/12.webp", "img/recuerdos/13.webp", "img/recuerdos/14.webp", "img/recuerdos/15.webp",
+          "img/recuerdos/16.webp", "img/recuerdos/17.webp", "img/recuerdos/18.webp", "img/recuerdos/19.webp", "img/recuerdos/20.webp",
+          "img/recuerdos/21.webp", "img/recuerdos/22.webp", "img/recuerdos/23.webp", "img/recuerdos/24.webp", "img/recuerdos/25.webp",
+          "img/recuerdos/26.webp", "img/recuerdos/27.webp", "img/recuerdos/28.webp", "img/recuerdos/29.webp", "img/recuerdos/30.webp",
+          "img/recuerdos/31.webp", "img/recuerdos/32.webp", "img/recuerdos/33.webp", "img/recuerdos/34.webp", "img/recuerdos/35.webp",
+          "img/recuerdos/36.webp", "img/recuerdos/37.webp", "img/recuerdos/38.webp", "img/recuerdos/39.webp", "img/recuerdos/40.webp",
+          "img/recuerdos/41.webp", "img/recuerdos/42.webp", "img/recuerdos/43.webp", "img/recuerdos/44.webp", "img/recuerdos/45.webp",
+          "img/recuerdos/46.webp", "img/recuerdos/47.webp", "img/recuerdos/48.webp", "img/recuerdos/49.webp", "img/recuerdos/50.webp",
+          "img/recuerdos/51.webp", "img/recuerdos/52.webp", "img/recuerdos/53.webp", "img/recuerdos/54.webp", "img/recuerdos/55.webp",
+          "img/recuerdos/56.webp", "img/recuerdos/57.webp", "img/recuerdos/58.webp", "img/recuerdos/59.webp", "img/recuerdos/60.webp",
+          "img/recuerdos/61.webp", "img/recuerdos/62.webp", "img/recuerdos/63.webp", "img/recuerdos/64.webp", "img/recuerdos/65.webp",
+          "img/recuerdos/66.webp", "img/recuerdos/67.webp", "img/recuerdos/68.webp", "img/recuerdos/69.webp", "img/recuerdos/70.webp",
+          "img/recuerdos/71.webp", "img/recuerdos/72.webp", "img/recuerdos/73.webp", "img/recuerdos/74.webp", "img/recuerdos/75.webp",
+          "img/recuerdos/76.webp", "img/recuerdos/77.webp", "img/recuerdos/78.webp", "img/recuerdos/79.webp", "img/recuerdos/80.webp",
+          "img/recuerdos/81.webp", "img/recuerdos/82.webp", "img/recuerdos/83.webp", "img/recuerdos/84.webp", "img/recuerdos/85.webp",
+          "img/recuerdos/86.webp", "img/recuerdos/87.webp", "img/recuerdos/88.webp", "img/recuerdos/89.webp", "img/recuerdos/90.webp",
+          "img/recuerdos/91.webp", "img/recuerdos/92.webp", "img/recuerdos/93.webp", "img/recuerdos/94.webp", "img/recuerdos/95.webp",
+          "img/recuerdos/96.webp", "img/recuerdos/97.webp", "img/recuerdos/98.webp", "img/recuerdos/99.webp", "img/recuerdos/100.webp"
+        ],
+        descripcion: "Foto grupal con todos los jugadores activos del primer día."
+      }
+    ];
+
+    /* ═══════════════════════════════════════════════════════════════
+       MI SKIN — tu skin para que la descarguen
+    ═══════════════════════════════════════════════════════════════ */
+    const MI_SKIN = {
+      nombre: "Mi Skin",
+      foto: "img/skin/custom.png",                          // ej: "img/skin/skin.png"
+      link: "img/skin/custom.png",                          // link de descarga del .png
+      descripcion: "Descarga mi skin y úsala en Minecraft Bedrock."
+    };
+    /* ═══════════════════════════════════════════════════════════════ */
+  </script>
+
+  <style>
+    :root {
+      --green: #4ade80;
+      --green2: #16a34a;
+      --dirt: #92400e;
+      --stone: #78716c;
+      --night: #0a0f1e;
+      --card-bg: #111827;
+      --border: #1f2937;
+      --gold: #fbbf24;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--night);
+      color: #e5e7eb;
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 54px;
+      background: rgba(10, 15, 30, .85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar-brand {
+      font-family: 'Press Start 2P', monospace;
+      font-size: .7rem;
+      color: var(--green);
+      letter-spacing: 1px;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 6px;
+    }
+
+    .navbar-links a {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: .82rem;
+      color: #9ca3af;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 4px;
+      transition: color .2s, background .2s;
+      cursor: pointer;
+      letter-spacing: .5px;
+    }
+
+    .navbar-links a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, .06);
+    }
+
+    .navbar-links a.active {
+      color: var(--green);
+      background: rgba(74, 222, 128, .1);
+      border: 1px solid rgba(74, 222, 128, .25);
+    }
+
+    /* hide/show sections */
+    .page-section {
+      display: none;
+    }
+
+    .page-section.visible {
+      display: block;
+    }
+
+    /* skin page */
+    .skin-card {
+      max-width: 420px;
+      margin: 0 auto;
+      text-align: center;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      padding: 40px 30px;
+    }
+
+    .skin-card img {
+      width: 180px;
+      image-rendering: pixelated;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      border: 2px solid var(--border);
+    }
+
+    .skin-card .placeholder-icon {
+      font-size: 5rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .skin-card h2 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: .85rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .skin-card p {
+      color: #6b7280;
+      font-size: .9rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        padding: 0 14px;
+      }
+
+      .navbar-links a {
+        padding: 6px 10px;
+        font-size: .75rem;
+      }
+
+      .navbar-brand {
+        font-size: .55rem;
+      }
+    }
+
+    /* STARS */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(1px 1px at 10% 15%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 60%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 25%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 80%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 40%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 85%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 10%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 70%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 55%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 50%, #fff 0%, transparent 100%);
+    }
+
+    /* BANNER */
+    .banner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 40px 20px 60px;
+    }
+
+    .banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 0, 0, .08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, .08) 1px, transparent 1px);
+      background-size: 16px 16px;
+      pointer-events: none;
+    }
+
+    .banner-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .mc-icon-wrapper {
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
+      margin-bottom: 18px;
+    }
+
+    .mc-icon {
+      width: 72px;
+      height: 72px;
+      image-rendering: pixelated;
+      filter: drop-shadow(0 4px 20px rgba(74, 222, 128, .5));
+      transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-origin: center;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .banner h1 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1.4rem, 5vw, 2.6rem);
+      color: #fff;
+      text-shadow: 4px 4px 0 #000, 0 0 40px var(--green);
+      letter-spacing: 2px;
+      line-height: 1.4;
+    }
+
+    .banner h1 span {
+      color: var(--green);
+    }
+
+    .banner-sub {
+      margin-top: 14px;
+      font-size: 1rem;
+      color: #94a3b8;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    /* SECTION */
+    .section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    .section-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: .85rem;
+      color: var(--green);
+      text-align: center;
+      margin-bottom: 48px;
+      letter-spacing: 3px;
+      text-shadow: 0 0 20px var(--green2);
+    }
+
+    /* GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+    }
+
+    /* CARD */
+    .card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--green2);
+      box-shadow: 0 16px 48px rgba(74, 222, 128, .2);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: .55rem;
+      background: rgba(0, 0, 0, .75);
+      color: var(--gold);
+      padding: 5px 9px;
+      border: 1px solid var(--gold);
+      border-radius: 2px;
+      z-index: 3;
+      letter-spacing: 1px;
+    }
+
+    /* CARD IMAGE AREA */
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: #1f2937;
+    }
+
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .35s;
+    }
+
+    .card-thumb:hover img {
+      transform: scale(1.04);
+    }
+
+    /* camera icon + count */
+    .card-thumb .photo-count {
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
+      background: rgba(0, 0, 0, .72);
+      color: #fff;
+      font-size: .75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      pointer-events: none;
+    }
+
+    /* placeholder */
+    .card-img-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #1a2744 0%, #162032 50%, #0f1a2e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-img-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+
+    .placeholder-icon {
+      font-size: 3.5rem;
+      filter: grayscale(1) opacity(.3);
+      z-index: 1;
+    }
+
+    /* CARD BODY */
+    .card-body {
+      padding: 22px 22px 24px;
+    }
+
+    .card-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: .8rem;
+      color: #fff;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .card-desc {
+      font-size: .88rem;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      min-height: 42px;
+    }
+
+    /* BUTTON */
+    .btn-download {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 13px 0;
+      background: var(--green2);
+      color: #fff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: .65rem;
+      letter-spacing: 1px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, box-shadow .2s;
+      box-shadow: 0 4px 0 #14532d;
+      position: relative;
+      top: 0;
+    }
+
+    .btn-download:hover {
+      background: #15803d;
+      box-shadow: 0 6px 0 #14532d;
+      top: -2px;
+    }
+
+    .btn-download:active {
+      box-shadow: none;
+      top: 4px;
+    }
+
+    .btn-download .icon {
+      font-size: 1rem;
+    }
+
+    .btn-download.disabled {
+      background: #374151;
+      box-shadow: 0 4px 0 #1f2937;
+      cursor: not-allowed;
+      color: #6b7280;
+    }
+
+    .btn-download.disabled:hover {
+      top: 0;
+      background: #374151;
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 32px 20px;
+      border-top: 1px solid var(--border);
+      font-size: .78rem;
+      color: #374151;
+      font-family: 'Press Start 2P', monospace;
+      letter-spacing: 1px;
+    }
+
+    /* PIXEL DIVIDER */
+    .pixel-divider {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 48px;
+    }
+
+    .pixel-divider span {
+      width: 12px;
+      height: 12px;
+      background: var(--green2);
+      display: inline-block;
+      border-radius: 2px;
+    }
+
+    .pixel-divider span:nth-child(even) {
+      background: var(--dirt);
+    }
+
+    .pixel-divider span:nth-child(3n) {
+      background: var(--stone);
+    }
+
+    /* ════════════════════════════
+       LIGHTBOX
+    ════════════════════════════ */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, .92);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    #lightbox.open {
+      display: flex;
+    }
+
+    #lightbox .lb-img-wrap {
+      position: relative;
+      max-width: 90vw;
+      max-height: 78vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lb-frame {
+      position: relative;
+      overflow: hidden;
+      width: 90vw;
+      height: 78vh;
+      border-radius: 4px;
+      box-shadow: 0 0 60px rgba(0, 0, 0, .8);
+    }
+
+    .lb-track {
+      display: flex;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+    }
+
+    .lb-track img {
+      min-width: 90vw;
+      width: 90vw;
+      height: 78vh;
+      object-fit: contain;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    /* arrows */
+    .lb-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, .6);
+      border: 2px solid #374151;
+      color: #fff;
+      font-size: 1.6rem;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, opacity 0.4s ease;
+      z-index: 2;
+      user-select: none;
+      opacity: 0;
+    }
+
+    #lightbox:hover .lb-arrow {
+      opacity: 1;
+    }
+
+    .lb-arrow:hover {
+      background: var(--green2);
+      border-color: var(--green);
+    }
+
+    #lb-prev {
+      left: -60px;
+    }
+
+    #lb-next {
+      right: -60px;
+    }
+
+    /* close */
+    #lb-close {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      background: rgba(0, 0, 0, .6);
+      border: 2px solid #374151;
+      color: #fff;
+      font-size: 1.4rem;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      cursor: pointer;
+      z-index: 1001;
+      transition: background .2s, border-color .2s, opacity 0.4s ease;
+      opacity: 0;
+    }
+
+    #lightbox:hover #lb-close {
+      opacity: 1;
+    }
+
+    #lb-close:hover {
+      background: #991b1b;
+      border-color: #ef4444;
+    }
+
+    /* counter + title */
+    .lb-meta {
+      text-align: center;
+      color: #9ca3af;
+      font-size: .85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    #lightbox:hover .lb-meta {
+      opacity: 1;
+    }
+
+    .lb-meta strong {
+      color: #fff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: .65rem;
+    }
+
+    /* dots */
+    .lb-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: center;
+      max-width: 90vw;
+      padding: 0 10px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    #lightbox:hover .lb-dots {
+      opacity: 1;
+    }
+
+    .lb-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #374151;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+      border: 1px solid #4b5563;
+    }
+
+    .lb-dot:hover {
+      transform: scale(1.4);
+    }
+
+    .lb-dot.active {
+      background: var(--green);
+      border-color: var(--green2);
+    }
+
+    /* mobile arrows inside image */
+    @media (max-width: 600px) {
+      #lb-prev {
+        left: 6px;
+      }
+
+      #lb-next {
+        right: 6px;
+      }
+    }
+
+    /* ── Gift Box and Special Memories Album ── */
+    .gift-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 50vh;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .gift-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b, #ef4444);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 2.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      animation: pulse-gift-text 2s infinite alternate;
+      transition: opacity 0.5s ease-out;
+    }
+
+    .gift-wrapper p {
+      transition: opacity 0.5s ease-out;
+    }
+
+    .gift-wrapper.fade-out-texts .gift-title,
+    .gift-wrapper.fade-out-texts p {
+      opacity: 0 !important;
+      pointer-events: none;
+    }
+
+    .gift-box {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      animation: gift-float 2.5s ease-in-out infinite alternate;
+    }
+
+    .gift-box:hover {
+      animation: gift-shake 0.5s ease-in-out infinite;
+    }
+
+    .gift-lid {
+      position: absolute;
+      top: 0;
+      left: -5px;
+      width: 150px;
+      height: 35px;
+      background: #dc2626;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      z-index: 2;
+      transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1.2s;
+    }
+
+    .gift-body {
+      position: absolute;
+      top: 30px;
+      left: 0;
+      width: 140px;
+      height: 110px;
+      background: #b91c1c;
+      border-radius: 0 0 6px 6px;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3), 0 8px 20px rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .gift-ribbon-v {
+      position: absolute;
+      top: 0;
+      left: 60px;
+      width: 20px;
+      height: 100%;
+      background: linear-gradient(to bottom, #fbbf24, #d97706);
+      z-index: 2;
+    }
+
+    .gift-ribbon-h {
+      position: absolute;
+      top: 45px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: linear-gradient(to right, #fbbf24, #d97706);
+      z-index: 2;
+    }
+
+    .gift-bow-left,
+    .gift-bow-right {
+      position: absolute;
+      top: -20px;
+      width: 40px;
+      height: 26px;
+      border: 6px solid #fbbf24;
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    .gift-bow-left {
+      left: 22px;
+      transform: rotate(-35deg);
+    }
+
+    .gift-bow-right {
+      right: 22px;
+      transform: rotate(35deg);
+    }
+
+    .gift-bow-center {
+      position: absolute;
+      top: -10px;
+      left: 60px;
+      width: 20px;
+      height: 20px;
+      background: #fbbf24;
+      border-radius: 50%;
+      z-index: 4;
+    }
+
+    @keyframes gift-float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      100% {
+        transform: translateY(-12px) rotate(2deg);
+      }
+    }
+
+    @keyframes gift-shake {
+
+      0%,
+      100% {
+        transform: scale(1.05) rotate(0deg);
+      }
+
+      25% {
+        transform: scale(1.05) rotate(-4deg);
+      }
+
+      75% {
+        transform: scale(1.05) rotate(4deg);
+      }
+    }
+
+    @keyframes pulse-gift-text {
+      0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.3));
+      }
+
+      100% {
+        transform: scale(1.03);
+        filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
+      }
+    }
+
+    .gift-box.shaking {
+      position: relative;
+      z-index: 10000 !important;
+      animation: gift-shake-intense 1.2s ease-in-out forwards !important;
+    }
+
+    @keyframes gift-shake-intense {
+
+      0%,
+      100% {
+        transform: scale(1.05) rotate(0deg);
+      }
+
+      10% {
+        transform: scale(1.05) rotate(-6deg) translateY(-2px);
+      }
+
+      20% {
+        transform: scale(1.05) rotate(6deg) translateY(2px);
+      }
+
+      30% {
+        transform: scale(1.08) rotate(-8deg) translateY(-4px);
+      }
+
+      40% {
+        transform: scale(1.08) rotate(8deg) translateY(4px);
+      }
+
+      50% {
+        transform: scale(1.1) rotate(-10deg) translateY(-6px);
+      }
+
+      60% {
+        transform: scale(1.1) rotate(10deg) translateY(6px);
+      }
+
+      70% {
+        transform: scale(1.15) rotate(-12deg) translateY(-8px);
+      }
+
+      80% {
+        transform: scale(1.15) rotate(12deg) translateY(8px);
+      }
+
+      90% {
+        transform: scale(1.2) rotate(-8deg) translateY(-4px);
+      }
+    }
+
+    .gift-box.opening .gift-lid {
+      transform: translateY(-110px) rotate(-40deg) scale(0.7);
+      opacity: 0;
+    }
+
+    .gift-box.opening {
+      position: relative;
+      z-index: 10000 !important;
+      animation: gift-pop 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+    }
+
+    @keyframes gift-pop {
+      0% {
+        transform: scale(1);
+      }
+
+      30% {
+        transform: scale(1.1) rotate(-3deg);
+      }
+
+      60% {
+        transform: scale(1.3) rotate(3deg);
+        filter: brightness(1.3);
+      }
+
+      100% {
+        transform: scale(0);
+        opacity: 0;
+        filter: brightness(2) blur(2px);
+      }
+    }
+
+    .hidden-section {
+      display: none !important;
+    }
+
+    .visible-section {
+      display: block !important;
+      animation: gift-reveal-fade 0.8s ease-out forwards;
+    }
+
+    @keyframes gift-reveal-fade {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* ── Cinematic Text Overlay ── */
+    .cinematic-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .cinematic-overlay.active {
+      opacity: 1;
+    }
+
+    .cinematic-text {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.2rem;
+      color: var(--green);
+      text-shadow: 0 0 25px rgba(74, 222, 128, 0.9);
+      text-align: center;
+      line-height: 2;
+      letter-spacing: 2px;
+      transform: scale(0.85);
+      opacity: 0;
+      filter: blur(10px);
+      transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+    }
+
+    .cinematic-overlay.show-text .cinematic-text {
+      transform: scale(1);
+      opacity: 1;
+      filter: blur(0);
+      transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.5s ease, filter 1.5s ease;
+      animation: emotional-pulse 3.5s ease-in-out infinite alternate 1.5s;
+    }
+
+    .emotional-sub {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      text-transform: none;
+      text-shadow: none;
+      letter-spacing: 3px;
+      margin-top: 18px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .cinematic-overlay.show-text .emotional-sub {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 2.0s ease 1.4s, transform 2.0s cubic-bezier(0.16, 1, 0.3, 1) 1.4s;
+    }
+
+    @keyframes emotional-pulse {
+      0% {
+        transform: scale(1);
+        text-shadow: 0 0 20px rgba(74, 222, 128, 0.8);
+        letter-spacing: 2px;
+      }
+
+      100% {
+        transform: scale(1.03);
+        text-shadow: 0 0 35px rgba(74, 222, 128, 1), 0 0 15px rgba(255, 255, 255, 0.3);
+        letter-spacing: 4px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .cinematic-text {
+        font-size: 0.85rem;
+        padding: 0 15px;
+      }
+
+      .emotional-sub {
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+      }
+    }
+
+    /* ── Welcome Splash Screen ── */
+    .welcome-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: radial-gradient(ellipse at center, #0f172a 0%, #020617 70%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      transition: opacity 1.2s ease, visibility 1.2s ease;
+    }
+
+    .welcome-splash.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .welcome-heart {
+      font-size: 3.5rem;
+      animation: heart-beat 1.2s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.6));
+    }
+
+    @keyframes heart-beat {
+      0% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1.15);
+      }
+    }
+
+    .welcome-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.1rem;
+      color: var(--green);
+      text-shadow: 0 0 25px rgba(74, 222, 128, 0.8);
+      text-align: center;
+      letter-spacing: 3px;
+      line-height: 2.2;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: welcome-fade-in 1.5s ease 0.5s forwards;
+    }
+
+    .welcome-sub {
+      font-family: 'Inter', 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      letter-spacing: 2px;
+      text-align: center;
+      opacity: 0;
+      animation: welcome-fade-in 1.5s ease 1.5s forwards;
+    }
+
+    .welcome-btn {
+      margin-top: 20px;
+      padding: 14px 40px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.7rem;
+      color: #fff;
+      background: linear-gradient(135deg, #16a34a, #4ade80);
+      border: 2px solid #4ade80;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      box-shadow: 0 0 25px rgba(74, 222, 128, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      animation: welcome-fade-in 1.5s ease 2.5s forwards;
+    }
+
+    .welcome-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(74, 222, 128, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .welcome-btn:active {
+      transform: scale(0.97);
+    }
+
+    @keyframes welcome-fade-in {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .welcome-particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .welcome-particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(74, 222, 128, 0.4);
+      animation: particle-float linear infinite;
+    }
+
+    @keyframes particle-float {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .welcome-title {
+        font-size: 0.8rem;
+        padding: 0 20px;
+      }
+
+      .welcome-sub {
+        font-size: 0.7rem;
+        padding: 0 20px;
+      }
+
+      .welcome-btn {
+        font-size: 0.6rem;
+        padding: 12px 30px;
+      }
+    }
+
+    /* ── Pre-Splash Screen ── */
+    .pre-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: #020617;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .pre-splash.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .pre-cat {
+      width: 150px;
+      height: auto;
+      border-radius: 12px;
+      animation: cat-float 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes cat-float {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .pre-box {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 25px 40px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .pre-box h2 {
+      font-family: 'Press Start 2P', monospace;
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .pre-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      position: relative;
+    }
+
+    .pre-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.8rem;
+      padding: 12px 30px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pre-btn.yes {
+      background: var(--green2);
+      border: 2px solid var(--green);
+      color: #fff;
+    }
+
+    .pre-btn.yes:hover {
+      background: var(--green);
+      transform: scale(1.05);
+      color: #000;
+    }
+
+    .pre-btn.no {
+      background: #ef4444;
+      border: 2px solid #fca5a5;
+      color: #fff;
+      position: relative;
+    }
+
+    /* ── Easter Egg ── */
+    .mc-icon:active {
+      transform: scale(0.85);
+    }
+
+    .block-particle {
+      position: fixed;
+      background: #4ade80;
+      pointer-events: none;
+      z-index: 9999;
+      animation: pop-particle 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+      border-radius: 2px;
+    }
+
+    .block-particle.dirt {
+      background: #92400e;
+    }
+
+    @keyframes pop-particle {
+      0% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0) rotate(var(--rot));
+        opacity: 0;
+      }
+    }
+
+    .easter-egg-container {
+      position: fixed;
+      bottom: -400px;
+      right: 15%;
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      z-index: 100000;
+      transition: bottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+    }
+
+    .easter-egg-container.show {
+      bottom: 15px;
+    }
+
+    .easter-egg-face {
+      width: 250px;
+      height: auto;
+      filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.8));
+    }
+
+    .easter-egg-bubble {
+      background: #fff;
+      color: #000;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.8rem;
+      padding: 15px 20px;
+      border-radius: 20px;
+      border-bottom-right-radius: 0;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      margin-top: 40px;
+      opacity: 0;
+      transform: scale(0.5) translateX(-20px);
+      transform-origin: bottom right;
+      transition: opacity 0.3s 0.4s, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s;
+    }
+
+    .easter-egg-container.show .easter-egg-bubble {
+      opacity: 1;
+      transform: scale(1) translateX(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Pre-Splash Screen -->
+  <div id="pre-splash" class="pre-splash">
+    <img src="https://media.tenor.com/gLiJ_1edFWwAAAAe/cat-gato.png" alt="gato" class="pre-cat">
+    <div class="pre-box">
+      <h2>¿Eres idhu?</h2>
+      <div class="pre-buttons">
+        <button class="pre-btn yes" onclick="confirmIdhu()">Sí</button>
+        <button class="pre-btn no" id="btn-no" onmouseover="dodgeNoButton()" onclick="rejectIdhu()">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Welcome Splash Screen -->
+  <div class="welcome-splash" id="welcome-splash" style="display: none;">
+    <div class="welcome-particles" id="welcome-particles"></div>
+    <div class="welcome-heart">🎂</div>
+    <div class="welcome-title">
+      ¡Feliz Cumpleaños idhu! 🎉<br>
+      Esto es para ti
+    </div>
+    <div class="welcome-sub">con todo mi cariño — papia ❤️</div>
+    <button class="welcome-btn" onclick="enterPage()">✨ ENTRAR ✨</button>
+  </div>
+
+  <div class="stars"></div>
+  <div id="easter-egg-container" class="easter-egg-container">
+    <div class="easter-egg-bubble">Hola xd</div>
+    <img src="img/skin/yo%20xd.png" class="easter-egg-face" alt="easter egg">
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <span class="navbar-brand" id="nav-brand"></span>
+    <div class="navbar-links">
+      <a onclick="showPage('inicio')" id="nav-inicio" class="active">Inicio</a>
+      <a onclick="showPage('texturas')" id="nav-texturas">Texturas</a>
+      <a onclick="showPage('addons')" id="nav-addons">Addons</a>
+      <a onclick="showPage('recuerdos')" id="nav-recuerdos">Recuerdos</a>
+      <a onclick="showPage('skin')" id="nav-skin">Mi Skin</a>
+    </div>
+  </nav>
+
+  <!-- ═══ PÁGINA: INICIO ═══ -->
+  <div id="page-inicio" class="page-section visible" style="padding-top:54px;">
+
+    <!-- BANNER -->
+    <div class="banner" id="banner">
+      <div class="banner-content">
+        <div class="mc-icon-wrapper">
+          <svg class="mc-icon" onmousedown="event.preventDefault()" onclick="triggerEasterEgg(event)"
+            style="cursor: pointer;" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <rect width="64" height="64" fill="#92400e" />
+            <rect width="64" height="16" fill="#4ade80" />
+            <rect y="14" width="64" height="4" fill="#16a34a" />
+            <rect x="0" y="0" width="8" height="8" fill="#86efac" opacity=".4" />
+            <rect x="56" y="8" width="8" height="8" fill="#14532d" opacity=".4" />
+            <rect x="8" y="22" width="4" height="4" fill="#78350f" opacity=".5" />
+            <rect x="24" y="30" width="4" height="4" fill="#78350f" opacity=".5" />
+            <rect x="44" y="20" width="4" height="4" fill="#78350f" opacity=".5" />
+            <rect x="14" y="40" width="4" height="4" fill="#78350f" opacity=".5" />
+            <rect x="36" y="46" width="4" height="4" fill="#78350f" opacity=".5" />
+          </svg>
+        </div>
+        <h1 id="banner-title"></h1>
+        <p class="banner-sub">⚔ Archivo de Temporadas Papiacraft ⚔</p>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <section class="section">
+      <p class="section-title">— DESCARGA TU TEMPORADA FAVORITA —</p>
+      <div class="pixel-divider">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+  </div><!-- /page-inicio -->
+
+  <!-- ═══ PÁGINA: TEXTURAS ═══ -->
+  <div id="page-texturas" class="page-section" style="padding-top:54px;">
+    <section class="section">
+      <p class="section-title">— PAQUETES DE TEXTURAS —</p>
+      <div class="pixel-divider">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="grid" id="grid-texturas"></div>
+    </section>
+  </div><!-- /page-texturas -->
+
+  <!-- ═══ PÁGINA: ADDONS ═══ -->
+  <div id="page-addons" class="page-section" style="padding-top:54px;">
+    <section class="section">
+      <p class="section-title">— COMPLEMENTOS Y ADDONS —</p>
+      <div class="pixel-divider">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="grid" id="grid-addons"></div>
+    </section>
+  </div><!-- /page-addons -->
+
+  <!-- ═══ PÁGINA: RECUERDOS ═══ -->
+  <div id="page-recuerdos" class="page-section" style="padding-top:54px;">
+
+    <audio id="gift-audio" loop src="img/song.mp3"></audio>
+
+    <!-- Cinematic Fullscreen Text Overlay -->
+    <div id="recuerdos-cinematic-overlay" class="cinematic-overlay hidden-section">
+      <div class="cinematic-text">
+        ÁLBUM DE RECUERDOS
+        <span class="emotional-sub">Nuestra historia en imágenes... ❤️</span>
+      </div>
+    </div>
+
+    <!-- Regalo Interactivo -->
+    <div id="recuerdos-gift" class="gift-wrapper">
+      <h2 class="gift-title">Para idhu<br>de parte de papia ❤️</h2>
+      <div class="gift-box" onclick="openGift()">
+        <div class="gift-lid">
+          <div class="gift-bow-left"></div>
+          <div class="gift-bow-right"></div>
+          <div class="gift-bow-center"></div>
+        </div>
+        <div class="gift-body">
+          <div class="gift-ribbon-v"></div>
+          <div class="gift-ribbon-h"></div>
+        </div>
+      </div>
+      <p style="font-family:'Press Start 2P', monospace; font-size:0.6rem; color:#6b7280; letter-spacing: 0.5px;">¡Toca
+        el regalo para abrirlo!</p>
+    </div>
+
+    <!-- Contenido del Álbum oculto inicialmente -->
+    <div id="recuerdos-album-content" class="hidden-section">
+      <section class="section">
+        <p class="section-title">— ÁLBUM DE RECUERDOS —</p>
+        <div class="pixel-divider">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="grid" id="grid-recuerdos"></div>
+      </section>
+    </div>
+
+  </div><!-- /page-recuerdos -->
+
+  <!-- ═══ PÁGINA: MI SKIN ═══ -->
+  <div id="page-skin" class="page-section" style="padding-top:54px;">
+    <section class="section">
+      <p class="section-title">— MI SKIN —</p>
+      <div class="pixel-divider">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div id="skin-container"></div>
+    </section>
+  </div><!-- /page-skin -->
+
+  <footer id="footer"></footer>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <div id="lb-close" title="Cerrar (Esc)">✕</div>
+    <div class="lb-img-wrap">
+      <div class="lb-arrow" id="lb-prev">&#8592;</div>
+      <div class="lb-frame">
+        <div class="lb-track" id="lb-track"></div>
+      </div>
+      <div class="lb-arrow" id="lb-next">&#8594;</div>
+    </div>
+    <div class="lb-meta">
+      <strong id="lb-title"></strong>
+      <span id="lb-counter"></span>
+    </div>
+    <div class="lb-dots" id="lb-dots"></div>
+  </div>
+
+  <script>
+    // ── Welcome Splash Screen ──
+    // Generate floating particles
+    (function () {
+      const container = document.getElementById('welcome-particles');
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'welcome-particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (4 + Math.random() * 6) + 's';
+        p.style.animationDelay = (Math.random() * 5) + 's';
+        p.style.width = (2 + Math.random() * 3) + 'px';
+        p.style.height = p.style.width;
+        if (Math.random() > 0.5) {
+          p.style.background = 'rgba(239, 68, 68, 0.3)';
+        }
+        container.appendChild(p);
+      }
+    })();
+
+    let easterEggClicks = 0;
+    let easterEggTimer = null;
+
+    function triggerEasterEgg(e) {
+      // 1. Generate large spinning particles
+      for (let i = 0; i < 15; i++) {
+        const p = document.createElement('div');
+        p.className = 'block-particle' + (Math.random() > 0.5 ? ' dirt' : '');
+
+        const size = Math.floor(Math.random() * 12) + 12; // 12px to 24px
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+
+        p.style.left = e.clientX + 'px';
+        p.style.top = e.clientY + 'px';
+
+        const tx = (Math.random() - 0.5) * 350 + 'px';
+        const ty = (Math.random() - 0.5) * 350 + 'px';
+        const rot = (Math.random() - 0.5) * 360 + 'deg';
+
+        p.style.setProperty('--tx', tx);
+        p.style.setProperty('--ty', ty);
+        p.style.setProperty('--rot', rot);
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 1200);
+      }
+
+      // 2. Count clicks
+      easterEggClicks++;
+      clearTimeout(easterEggTimer);
+
+      if (easterEggClicks >= 5) {
+        easterEggClicks = 0;
+        const container = document.getElementById('easter-egg-container');
+        container.classList.add('show');
+
+        // Hide it after 3 seconds
+        setTimeout(() => {
+          container.classList.remove('show');
+        }, 3000);
+      } else {
+        easterEggTimer = setTimeout(() => {
+          easterEggClicks = 0;
+        }, 600); // 600ms window between clicks
+      }
+    }
+
+    function confirmIdhu() {
+      const preSplash = document.getElementById('pre-splash');
+      preSplash.classList.add('hidden');
+      setTimeout(() => {
+        preSplash.style.display = 'none';
+        const splash = document.getElementById('welcome-splash');
+        splash.style.display = 'flex'; // Trigger the fade-in animations
+      }, 800);
+    }
+
+    function rejectIdhu() {
+      window.location.href = 'https://www.youtube.com/watch?v=6QzJUZLhJPo';
+    }
+
+    function dodgeNoButton() {
+      const btn = document.getElementById('btn-no');
+      const maxX = 120;
+      const maxY = 60;
+      const x = (Math.random() - 0.5) * maxX * 2;
+      const y = (Math.random() - 0.5) * maxY * 2;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function enterPage() {
+      const splash = document.getElementById('welcome-splash');
+      splash.classList.add('hidden');
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 1200);
+    }
+
+    // ── Page Navigation ──
+    function showPage(page) {
+      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('visible'));
+      document.getElementById('page-' + page).classList.add('visible');
+      document.querySelectorAll('.navbar-links a').forEach(a => a.classList.remove('active'));
+      document.getElementById('nav-' + page).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // ── Recuerdos Gift Logic ──
+    function openGift() {
+      const giftBox = document.querySelector('.gift-box');
+      if (!giftBox || giftBox.classList.contains('shaking') || giftBox.classList.contains('opening')) return;
+
+      const giftWrapper = document.getElementById('recuerdos-gift');
+      const audio = document.getElementById('gift-audio');
+
+      // 1. Shake intensely and fade out helper texts immediately
+      giftBox.classList.add('shaking');
+      giftWrapper.classList.add('fade-out-texts');
+
+      // 2. After 1.2s of intense shaking, open and pop slowly
+      setTimeout(() => {
+        giftBox.classList.remove('shaking');
+        giftBox.classList.add('opening');
+
+        // 3. AT THE SAME MOMENT as the box pops, start fading in the black overlay behind it!
+        // This darkens the screen smoothly as the box explodes.
+        const overlay = document.getElementById('recuerdos-cinematic-overlay');
+        overlay.classList.remove('hidden-section');
+        setTimeout(() => {
+          overlay.classList.add('active');
+        }, 50);
+
+        // 4. After 1.5s, the box completes explosion and is hidden. We are left in complete darkness.
+        setTimeout(() => {
+          giftWrapper.classList.add('hidden-section');
+
+          // Start the music immediately to completely erase any latency gap!
+          if (audio) {
+            audio.play().catch(err => console.log("Audio playback blocked:", err));
+          }
+
+          // 5. DRAMATIC DELAY: Wait 0.6s (600ms) in pitch darkness, then fade in glowing text
+          setTimeout(() => {
+            // Fade in the glowing text and subtitle
+            overlay.classList.add('show-text');
+
+            // 6. Let the title breathe and pulse for 5.5s while music plays
+            setTimeout(() => {
+              // A. First, only fade out the text, leaving the background fully dark/black!
+              overlay.classList.remove('show-text');
+
+              // B. Wait 1.5s for the text fade-out transition to complete beautifully
+              setTimeout(() => {
+                // C. Show the normal card section instantly in background
+                const content = document.getElementById('recuerdos-album-content');
+                content.classList.remove('hidden-section');
+                content.classList.add('visible-section');
+
+                // D. Open the lightbox immediately (it is already dark, so it opens behind the black overlay)
+                openLightbox('recuerdos', 0, 0);
+
+                // E. Fade out the dark background overlay slowly (0.8s) to reveal the open lightbox smoothly!
+                overlay.classList.remove('active');
+
+                setTimeout(() => {
+                  overlay.classList.add('hidden-section');
+                }, 800);
+              }, 1500);
+            }, 5500);
+
+          }, 600); // 0.6s of suspenseful silent darkness
+
+        }, 1500);
+      }, 1200);
+    }
+
+    // ── Banner ──
+    document.getElementById('nav-brand').textContent = SERVIDOR;
+
+    const styleTag = document.createElement('style');
+    styleTag.textContent = `.banner::before { background-image: url("${BANNER_IMG}"); }`;
+    document.head.appendChild(styleTag);
+
+    const parts = SERVIDOR.match(/^([A-Za-z]+)(.*)$/);
+    document.getElementById('banner-title').innerHTML =
+      parts ? `${parts[1]}<span>${parts[2]}</span>` : SERVIDOR;
+    document.getElementById('footer').innerHTML =
+      `${SERVIDOR} &nbsp;•&nbsp; Archivo histórico &nbsp;•&nbsp; Hecho con ❤`;
+
+    // ── Texturas Cards ──
+    const gridTex = document.getElementById('grid-texturas');
+    const TEX_PLACEHOLDERS = ['🎨', '🖌', '🗺', '✨'];
+    TEXTURAS.forEach((tex, i) => {
+      const fotos = tex.fotos && tex.fotos.length ? tex.fotos : [];
+      let imgHTML;
+      if (fotos.length > 0) {
+        const countBadge = fotos.length > 1
+          ? `<span class="photo-count">📷 ${fotos.length}</span>` : '';
+        imgHTML = `
+        <div class="card-thumb" onclick="openLightbox('texturas', ${i})">
+          <img src="${fotos[0]}" alt="${tex.titulo}">
+          ${countBadge}
+        </div>`;
+      } else {
+        imgHTML = `
+        <div class="card-img-placeholder">
+          <span class="placeholder-icon">${TEX_PLACEHOLDERS[i] || '🎨'}</span>
+        </div>`;
+      }
+      const btnHTML = tex.link
+        ? `<a class="btn-download" href="${tex.link}" target="_blank" rel="noopener">
+           <span class="icon">⬇</span> DESCARGAR TEXTURA
+         </a>`
+        : `<a class="btn-download disabled" href="#" onclick="return false;">
+           <span class="icon">🔒</span> PRÓXIMAMENTE
+         </a>`;
+      gridTex.innerHTML += `
+      <div class="card">
+        <div class="card-badge">TEXTURA</div>
+        ${imgHTML}
+        <div class="card-body">
+          <p class="card-title">${tex.titulo}</p>
+          <p class="card-desc">${tex.descripcion}</p>
+          ${btnHTML}
+        </div>
+      </div>`;
+    });
+
+    // ── Addons Cards ──
+    const gridAddons = document.getElementById('grid-addons');
+    const ADDONS_PLACEHOLDERS = ['⚙️', '📦', '👾', '🚀'];
+    ADDONS.forEach((addon, i) => {
+      const fotos = addon.fotos && addon.fotos.length ? addon.fotos : [];
+      let imgHTML;
+      if (fotos.length > 0) {
+        const countBadge = fotos.length > 1
+          ? `<span class="photo-count">📷 ${fotos.length}</span>` : '';
+        imgHTML = `
+        <div class="card-thumb" onclick="openLightbox('addons', ${i})">
+          <img src="${fotos[0]}" alt="${addon.titulo}">
+          ${countBadge}
+        </div>`;
+      } else {
+        imgHTML = `
+        <div class="card-img-placeholder">
+          <span class="placeholder-icon">${ADDONS_PLACEHOLDERS[i % ADDONS_PLACEHOLDERS.length] || '⚙️'}</span>
+        </div>`;
+      }
+      const btnHTML = addon.link
+        ? `<a class="btn-download" href="${addon.link}" target="_blank" rel="noopener">
+           <span class="icon">⬇</span> DESCARGAR ADDON
+         </a>`
+        : `<a class="btn-download disabled" href="#" onclick="return false;">
+           <span class="icon">🔒</span> PRÓXIMAMENTE
+         </a>`;
+      gridAddons.innerHTML += `
+      <div class="card">
+        <div class="card-badge">ADDON</div>
+        ${imgHTML}
+        <div class="card-body">
+          <p class="card-title">${addon.titulo}</p>
+          <p class="card-desc">${addon.descripcion}</p>
+          ${btnHTML}
+        </div>
+      </div>`;
+    });
+
+    // ── Recuerdos Cards ──
+    const gridRec = document.getElementById('grid-recuerdos');
+    RECUERDOS.forEach((rec, i) => {
+      const fotos = rec.fotos && rec.fotos.length ? rec.fotos : [];
+      let imgHTML;
+      if (fotos.length > 0) {
+        const countBadge = fotos.length > 1
+          ? `<span class="photo-count">📷 ${fotos.length}</span>` : '';
+        imgHTML = `
+        <div class="card-thumb" onclick="openLightbox('recuerdos', ${i})">
+          <img src="${fotos[0]}" alt="${rec.titulo}">
+          ${countBadge}
+        </div>`;
+      } else {
+        imgHTML = `
+        <div class="card-img-placeholder">
+          <span class="placeholder-icon">📸</span>
+        </div>`;
+      }
+      gridRec.innerHTML += `
+      <div class="card">
+        <div class="card-badge">RECUERDO</div>
+        ${imgHTML}
+        <div class="card-body">
+          <p class="card-title">${rec.titulo}</p>
+          <p class="card-desc">${rec.descripcion || ''}</p>
+        </div>
+      </div>`;
+    });
+
+    // ── Mi Skin ──
+    const skinCont = document.getElementById('skin-container');
+    const skinImg = MI_SKIN.foto
+      ? `<img src="${MI_SKIN.foto}" alt="${MI_SKIN.nombre}">`
+      : `<span class="placeholder-icon">🧑‍🎤</span>`;
+    const skinBtn = MI_SKIN.link
+      ? `<a class="btn-download" href="${MI_SKIN.link}" target="_blank" rel="noopener">
+         <span class="icon">⬇</span> DESCARGAR SKIN
+       </a>`
+      : `<a class="btn-download disabled" href="#" onclick="return false;">
+         <span class="icon">🔒</span> PRÓXIMAMENTE
+       </a>`;
+    skinCont.innerHTML = `
+    <div class="skin-card">
+      ${skinImg}
+      <h2>${MI_SKIN.nombre}</h2>
+      <p>${MI_SKIN.descripcion}</p>
+      ${skinBtn}
+    </div>`;
+
+    // ── Cards ──
+    const PLACEHOLDERS = ['🌲', '🏔', '🏙', '⚡', '🌊', '🔥'];
+    const grid = document.getElementById('grid');
+
+    MAPAS.forEach((mapa, i) => {
+      const fotos = mapa.fotos && mapa.fotos.length ? mapa.fotos : [];
+
+      let imgHTML;
+      if (fotos.length > 0) {
+        const countBadge = fotos.length > 1
+          ? `<span class="photo-count">📷 ${fotos.length}</span>` : '';
+        imgHTML = `
+        <div class="card-thumb" onclick="openLightbox('mapas', ${i})">
+          <img src="${fotos[0]}" alt="${mapa.titulo}">
+          ${countBadge}
+        </div>`;
+      } else {
+        imgHTML = `
+        <div class="card-img-placeholder">
+          <span class="placeholder-icon">${PLACEHOLDERS[i] || '🗺'}</span>
+        </div>`;
+      }
+
+      const btnHTML = mapa.link
+        ? `<a class="btn-download" href="${mapa.link}" target="_blank" rel="noopener">
+           <span class="icon">⬇</span> DESCARGAR MAPA
+         </a>`
+        : `<a class="btn-download disabled" href="#" onclick="return false;">
+           <span class="icon">🔒</span> PRÓXIMAMENTE
+         </a>`;
+
+      grid.innerHTML += `
+      <div class="card">
+        <div class="card-badge">${mapa.badge || "TEMPORADA " + (i + 1)}</div>
+        ${imgHTML}
+        <div class="card-body">
+          <p class="card-title">${mapa.titulo}</p>
+          <p class="card-desc">${mapa.descripcion}</p>
+          ${btnHTML}
+        </div>
+      </div>`;
+    });
+
+    // ── Lightbox (Carousel) ──
+    let lbActiveArray = [];
+    let lbAllPhotos = []; // flat array of all photo URLs for carousel
+    let lbSlideIdx = 0;
+    let lbSlideshowInterval = null;
+
+    const lb = document.getElementById('lightbox');
+    const lbTrack = document.getElementById('lb-track');
+    const lbTitle = document.getElementById('lb-title');
+    const lbCounter = document.getElementById('lb-counter');
+    const lbDots = document.getElementById('lb-dots');
+
+    function buildCarouselTrack() {
+      // Build a flat array of all photos from all items in the active array
+      lbAllPhotos = [];
+      lbActiveArray.forEach(item => {
+        if (item.fotos && item.fotos.length) {
+          item.fotos.forEach(foto => lbAllPhotos.push(foto));
+        }
+      });
+
+      // Create all img elements in the track
+      lbTrack.innerHTML = '';
+      lbAllPhotos.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        lbTrack.appendChild(img);
+      });
+    }
+
+    function slideToIndex(idx, instant) {
+      lbSlideIdx = idx;
+      const offset = -(idx * 90); // each image is 90vw wide
+      if (instant) {
+        lbTrack.style.transition = 'none';
+      } else {
+        lbTrack.style.transition = 'transform 1s ease-in-out';
+      }
+      lbTrack.style.transform = `translateX(${offset}vw)`;
+
+      // Force reflow for instant jumps
+      if (instant) void lbTrack.offsetWidth;
+
+      // Update counter and dots
+      lbCounter.textContent = `${lbSlideIdx + 1} / ${lbAllPhotos.length}`;
+      updateDots();
+    }
+
+    function updateDots() {
+      lbDots.innerHTML = '';
+      if (lbAllPhotos.length > 1) {
+        lbAllPhotos.forEach((_, idx) => {
+          const d = document.createElement('div');
+          d.className = 'lb-dot' + (idx === lbSlideIdx ? ' active' : '');
+          d.onclick = () => {
+            slideToIndex(idx, false);
+            resetSlideshowTimer();
+          };
+          lbDots.appendChild(d);
+        });
+      }
+    }
+
+    function startSlideshow() {
+      stopSlideshow();
+      lbSlideshowInterval = setInterval(() => {
+        const nextIdx = (lbSlideIdx + 1) % lbAllPhotos.length;
+        slideToIndex(nextIdx, false);
+      }, 3500);
+    }
+
+    function stopSlideshow() {
+      if (lbSlideshowInterval) {
+        clearInterval(lbSlideshowInterval);
+        lbSlideshowInterval = null;
+      }
+    }
+
+    let lbResumeTimeout = null;
+
+    function resetSlideshowTimer() {
+      // Stop the current slideshow immediately
+      stopSlideshow();
+
+      // Clear any previous resume timer
+      if (lbResumeTimeout) {
+        clearTimeout(lbResumeTimeout);
+        lbResumeTimeout = null;
+      }
+
+      // After 2.5s of inactivity, resume the slideshow
+      if (lbActiveArray === RECUERDOS) {
+        lbResumeTimeout = setTimeout(() => {
+          startSlideshow();
+        }, 2500);
+      }
+    }
+
+    function openLightbox(dataset, itemIdx, fotoIdx = 0) {
+      if (dataset === 'mapas') lbActiveArray = MAPAS;
+      else if (dataset === 'texturas') lbActiveArray = TEXTURAS;
+      else if (dataset === 'addons') lbActiveArray = ADDONS;
+      else if (dataset === 'recuerdos') lbActiveArray = RECUERDOS;
+
+      buildCarouselTrack();
+
+      // Calculate the flat index from itemIdx + fotoIdx
+      let flatIdx = 0;
+      for (let i = 0; i < itemIdx; i++) {
+        flatIdx += (lbActiveArray[i].fotos ? lbActiveArray[i].fotos.length : 0);
+      }
+      flatIdx += fotoIdx;
+
+      slideToIndex(flatIdx, true); // instant jump, no animation on first open
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lbTitle.textContent = lbActiveArray[itemIdx].titulo;
+
+      if (dataset === 'recuerdos') {
+        startSlideshow();
+      }
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      stopSlideshow();
+      if (lbResumeTimeout) {
+        clearTimeout(lbResumeTimeout);
+        lbResumeTimeout = null;
+      }
+    }
+
+    // Manual navigation: instant jump (no animation), pause slideshow, resume after 2.5s
+    function lbMove(dir) {
+      const nextIdx = (lbSlideIdx + dir + lbAllPhotos.length) % lbAllPhotos.length;
+      slideToIndex(nextIdx, true); // instant! no sliding animation
+      resetSlideshowTimer();
+    }
+
+    // arrows visibility
+    document.getElementById('lb-prev').onclick = () => lbMove(-1);
+    document.getElementById('lb-next').onclick = () => lbMove(1);
+    document.getElementById('lb-close').onclick = closeLightbox;
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'ArrowLeft') lbMove(-1);
+      if (e.key === 'ArrowRight') lbMove(1);
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+</body>
+
+</html>
